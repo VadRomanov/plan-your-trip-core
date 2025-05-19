@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: plan-your-trip-core
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5440/plan_your_trip}
+    driver-class-name: ${DB_DRIVER:org.postgresql.Driver}
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:postgres}
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    baseline-version: 0
+
+server:
+  port: 8080
