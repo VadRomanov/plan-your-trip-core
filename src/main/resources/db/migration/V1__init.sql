@@ -16,7 +16,8 @@ CREATE TABLE trips (
     start_date DATE,
     end_date DATE,
     expired BOOLEAN,
-    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    CONSTRAINT check_start_before_end CHECK (start_date < end_date)
 );
 
 CREATE TABLE trip_users (
@@ -36,7 +37,8 @@ CREATE TABLE hotels (
     check_in_date DATE,
     check_out_date DATE,
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-    CONSTRAINT fk_trip_hotel FOREIGN KEY (trip_id) REFERENCES trips(id) ON DELETE CASCADE
+    CONSTRAINT fk_trip_hotel FOREIGN KEY (trip_id) REFERENCES trips(id) ON DELETE CASCADE,
+    CONSTRAINT check_start_before_end CHECK (check_in_date < check_out_date)
 );
 
 -- TICKETS
@@ -50,14 +52,15 @@ CREATE TABLE tickets (
     arrival_time TIMESTAMPTZ,
     file_url VARCHAR(500),
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-    CONSTRAINT fk_trip_ticket FOREIGN KEY (trip_id) REFERENCES trips(id) ON DELETE CASCADE
+    CONSTRAINT fk_trip_ticket FOREIGN KEY (trip_id) REFERENCES trips(id) ON DELETE CASCADE,
+    CONSTRAINT check_start_before_end CHECK (departure_time < arrival_time)
 );
 
 -- NOTES
 CREATE TABLE notes (
     id BIGSERIAL PRIMARY KEY,
     trip_id BIGINT NOT NULL,
-    content TEXT,
+    content TEXT NOT NULL,
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     CONSTRAINT fk_trip_note FOREIGN KEY (trip_id) REFERENCES trips(id) ON DELETE CASCADE
 );

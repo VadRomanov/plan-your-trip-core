@@ -1,6 +1,7 @@
 package com.planyourtrip.core.dto;
 
 import lombok.Data;
+import lombok.NonNull;
 import lombok.experimental.Accessors;
 
 import java.time.OffsetDateTime;
@@ -9,7 +10,9 @@ import java.time.OffsetDateTime;
 @Accessors(chain = true)
 public class NoteDto {
     private Long id;
+    @NonNull
     private Long tripId;
+    @NonNull
     private String content;
     private OffsetDateTime createdAt;
 }

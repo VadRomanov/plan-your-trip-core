@@ -1,6 +1,7 @@
 package com.planyourtrip.core.dto;
 
 import lombok.Data;
+import lombok.NonNull;
 import lombok.experimental.Accessors;
 
 import java.time.LocalDate;
@@ -10,6 +11,7 @@ import java.time.OffsetDateTime;
 @Accessors(chain = true)
 public class HotelDto {
     private Long id;
+    @NonNull
     private Long tripId;
     private String name;
     private LocalDate checkInDate;
