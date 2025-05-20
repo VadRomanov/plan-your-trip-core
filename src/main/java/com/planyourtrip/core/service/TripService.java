@@ -2,7 +2,7 @@ package com.planyourtrip.core.service;
 
 import com.planyourtrip.core.dto.TripDto;
 
-import java.util.List;
+import java.util.Collection;
 
 public interface TripService {
     TripDto createTrip(TripDto tripDto);
@@ -13,5 +13,5 @@ public interface TripService {
 
     TripDto getTripById(Long id);
 
-    List<TripDto> getTripsByUser(Long telegramUserId);
+    Collection<TripDto> getTripsByUser(Long telegramUserId);
 }

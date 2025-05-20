@@ -2,7 +2,7 @@ package com.planyourtrip.core.service;
 
 import com.planyourtrip.core.dto.NoteDto;
 
-import java.util.List;
+import java.util.Collection;
 
 public interface NoteService {
     NoteDto createNote(NoteDto dto);
@@ -13,5 +13,5 @@ public interface NoteService {
 
     NoteDto getNoteById(Long id);
 
-    List<NoteDto> getNotesByTripId(Long tripId);
+    Collection<NoteDto> getNotesByTripId(Long tripId);
 }

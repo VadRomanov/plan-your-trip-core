@@ -2,7 +2,7 @@ package com.planyourtrip.core.service;
 
 import com.planyourtrip.core.dto.HotelDto;
 
-import java.util.List;
+import java.util.Collection;
 
 public interface HotelService {
     HotelDto createHotel(HotelDto hotelDto);
@@ -13,5 +13,5 @@ public interface HotelService {
 
     HotelDto getHotelById(Long id);
 
-    List<HotelDto> getHotelsByTripId(Long tripId);
+    Collection<HotelDto> getHotelsByTripId(Long tripId);
 }

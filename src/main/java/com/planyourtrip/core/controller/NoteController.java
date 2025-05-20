@@ -15,10 +15,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import java.util.Collection;
 
 @RestController
-@RequestMapping("/api/notes")
+@RequestMapping("/api/note")
 @Tag(name = "Notes", description = "API для заметок в поездке")
 @RequiredArgsConstructor
 public class NoteController {
@@ -27,7 +27,7 @@ public class NoteController {
 
     @Operation(summary = "Получить все заметки для поездки")
     @GetMapping("/trip/{tripId}")
-    public ResponseEntity<List<NoteDto>> getNotesByTrip(@PathVariable Long tripId) {
+    public ResponseEntity<Collection<NoteDto>> getNotesByTrip(@PathVariable Long tripId) {
         return ResponseEntity.ok(noteService.getNotesByTripId(tripId));
     }
 
@@ -38,8 +38,7 @@ public class NoteController {
 
     @PutMapping("/{id}")
     public ResponseEntity<NoteDto> updateNote(@PathVariable Long id, @RequestBody NoteDto noteDto) {
-        noteDto.setId(id);
-        return ResponseEntity.ok(noteService.updateNote(noteDto));
+        return ResponseEntity.ok(noteService.updateNote(noteDto.setId(id)));
     }
 
     @DeleteMapping("/{id}")

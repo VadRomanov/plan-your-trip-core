@@ -1,26 +1,37 @@
 package com.planyourtrip.core.service.impl;
 
 import com.planyourtrip.core.dto.TripDto;
+import com.planyourtrip.core.exception.BusinessException;
+import com.planyourtrip.core.exception.ResponseCode;
 import com.planyourtrip.core.mapper.TripMapper;
+import com.planyourtrip.core.mapper.UserMapper;
 import com.planyourtrip.core.repository.TripRepository;
-import com.planyourtrip.core.repository.UserRepository;
 import com.planyourtrip.core.service.TripService;
+import com.planyourtrip.core.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.util.Collection;
 import java.util.List;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class TripServiceImpl implements TripService {
+    private static final String TABLE_NAME = "trips";
+
     private final TripRepository tripRepository;
-    private final UserRepository userRepository;
+    private final UserService userService;
+    private final UserMapper userMapper;
     private final TripMapper tripMapper;
 
     @Override
     public TripDto createTrip(TripDto dto) {
+        if (dto.getEndDate().isBefore(LocalDate.now())) {
+            dto.setExpired(true);
+        }
         var trip = tripMapper.toEntity(dto);
         var savedTrip = tripRepository.save(trip);
 
@@ -43,17 +54,18 @@ public class TripServiceImpl implements TripService {
     @Override
     public TripDto getTripById(Long id) {
         var trip = tripRepository.findById(id)
-                .orElseThrow();
+                .orElseThrow(() -> BusinessException.builder(ResponseCode.ENTITY_NOT_FOUND)
+                        .params(List.of(TABLE_NAME, id))
+                        .build());
 
         return tripMapper.toDto(trip);
     }
 
     @Override
-    public List<TripDto> getTripsByUser(Long telegramUserId) {
-        var user = userRepository.findByTelegramId(telegramUserId)
-                .orElseThrow();
-        var trips = tripRepository.findByUsers(user);
+    public Collection<TripDto> getTripsByUser(Long telegramUserId) {
+        var userDto = userService.getByTelegramId(telegramUserId);
+        var trips = tripRepository.findByUsers(userMapper.toEntity(userDto));
 
-        return tripMapper.toDtoList(trips);
+        return tripMapper.toDtos(trips);
     }
 }

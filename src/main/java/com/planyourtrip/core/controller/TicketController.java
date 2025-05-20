@@ -15,10 +15,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import java.util.Collection;
 
 @RestController
-@RequestMapping("/api/tickets")
+@RequestMapping("/api/ticket")
 @Tag(name = "Tickets", description = "API для управления билетами")
 @RequiredArgsConstructor
 public class TicketController {
@@ -27,7 +27,7 @@ public class TicketController {
 
     @Operation(summary = "Получить билеты по поездке")
     @GetMapping("/trip/{tripId}")
-    public ResponseEntity<List<TicketDto>> getTicketsByTrip(@PathVariable Long tripId) {
+    public ResponseEntity<Collection<TicketDto>> getTicketsByTrip(@PathVariable Long tripId) {
         return ResponseEntity.ok(ticketService.getTicketsByTripId(tripId));
     }
 
@@ -38,8 +38,7 @@ public class TicketController {
 
     @PutMapping("/{id}")
     public ResponseEntity<TicketDto> updateTicket(@PathVariable Long id, @RequestBody TicketDto ticketDto) {
-        ticketDto.setId(id);
-        return ResponseEntity.ok(ticketService.updateTicket(ticketDto));
+        return ResponseEntity.ok(ticketService.updateTicket(ticketDto.setId(id)));
     }
 
     @DeleteMapping("/{id}")

@@ -2,7 +2,6 @@
 CREATE INDEX idx_users_telegram_id ON users(telegram_id);
 
 -- Индексы для trips
-CREATE INDEX idx_trips_user_id ON trips(user_id);
 CREATE INDEX idx_trips_start_date ON trips(start_date);
 
 -- Индексы для hotels

@@ -1,13 +1,11 @@
 
 package com.planyourtrip.core.entity;
 
-import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -15,6 +13,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.OffsetDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -24,22 +23,19 @@ import java.util.Set;
 @NoArgsConstructor
 @Setter
 @Getter
-public class User {
+public class User extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToMany(cascade = CascadeType.PERSIST)
-    @JoinTable(
-            name = "user_trip",
-            joinColumns = {@JoinColumn(name = "user_id")},
-            inverseJoinColumns = {@JoinColumn(name = "trip_id")}
-    )
-    private Set<Trip> cars = new HashSet<>();
-
+    @Column(unique = true)
     private Long telegramId;
     private String username;
     private String firstName;
     private String lastName;
     private String languageCode;
+    private OffsetDateTime createdAt;
+
+    @ManyToMany(mappedBy = "users")
+    private Set<Trip> trips = new HashSet<>();
 }

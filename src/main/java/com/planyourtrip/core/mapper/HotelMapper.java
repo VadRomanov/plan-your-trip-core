@@ -4,22 +4,20 @@ package com.planyourtrip.core.mapper;
 import com.planyourtrip.core.dto.HotelDto;
 import com.planyourtrip.core.entity.Hotel;
 import org.mapstruct.Mapper;
-import org.mapstruct.factory.Mappers;
+import org.mapstruct.Mapping;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
+import java.util.Set;
 
 @Mapper(componentModel = "spring")
 @Component
-public interface HotelMapper {
-    NoteMapper INSTANCE = Mappers.getMapper(NoteMapper.class);
+public interface HotelMapper extends BaseMapper {
 
-  //  @Mapping(target = "trip", ignore = true)
+    @Mapping(target = "tripId", source = "hotel.trip.id")
     HotelDto toDto(Hotel hotel);
 
-   // @Mapping(target = "trip", ignore = true)
+    @Mapping(target = "trip", expression = "java(toTrip(dto.getTripId()))")
     Hotel toEntity(HotelDto dto);
 
-  //  @Mapping(target = "trip", ignore = true)
-    List<HotelDto> toDtoList(List<Hotel> hotels);
+    Set<HotelDto> toDtos(Set<Hotel> hotels);
 }

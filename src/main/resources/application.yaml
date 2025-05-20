@@ -10,6 +10,18 @@ spring:
     enabled: true
     baseline-on-migrate: true
     baseline-version: 0
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: none
 
 server:
   port: 8080
+
+logging:
+  level:
+    root: info
+    web: info
+    org.springframework.web: debug
+    com.planyourtrip.core: ${LOGGING_LEVEL:debug}
+    com.zaxxer.hikari.pool: ${HIKARI_LOGGING_LEVEL:debug}

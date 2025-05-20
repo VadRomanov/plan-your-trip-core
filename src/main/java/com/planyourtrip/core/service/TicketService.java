@@ -2,7 +2,7 @@ package com.planyourtrip.core.service;
 
 import com.planyourtrip.core.dto.TicketDto;
 
-import java.util.List;
+import java.util.Collection;
 
 public interface TicketService {
     TicketDto createTicket(TicketDto dto);
@@ -13,5 +13,5 @@ public interface TicketService {
 
     TicketDto getTicketById(Long id);
 
-    List<TicketDto> getTicketsByTripId(Long tripId);
+    Collection<TicketDto> getTicketsByTripId(Long tripId);
 }

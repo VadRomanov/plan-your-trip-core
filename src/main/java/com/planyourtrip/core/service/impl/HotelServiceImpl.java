@@ -1,6 +1,8 @@
 package com.planyourtrip.core.service.impl;
 
 import com.planyourtrip.core.dto.HotelDto;
+import com.planyourtrip.core.exception.BusinessException;
+import com.planyourtrip.core.exception.ResponseCode;
 import com.planyourtrip.core.mapper.HotelMapper;
 import com.planyourtrip.core.repository.HotelRepository;
 import com.planyourtrip.core.service.HotelService;
@@ -8,12 +10,14 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.List;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class HotelServiceImpl implements HotelService {
+    private static final String TABLE_NAME = "hotels";
 
     private final HotelRepository hotelRepository;
     private final HotelMapper hotelMapper;
@@ -42,15 +46,17 @@ public class HotelServiceImpl implements HotelService {
     @Override
     public HotelDto getHotelById(Long id) {
         var hotel = hotelRepository.findById(id)
-                .orElseThrow();
+                .orElseThrow(() -> BusinessException.builder(ResponseCode.ENTITY_NOT_FOUND)
+                        .params(List.of(TABLE_NAME, id))
+                        .build());
 
         return hotelMapper.toDto(hotel);
     }
 
     @Override
-    public List<HotelDto> getHotelsByTripId(Long tripId) {
+    public Collection<HotelDto> getHotelsByTripId(Long tripId) {
         var trips = hotelRepository.findByTripId(tripId);
 
-        return hotelMapper.toDtoList(trips);
+        return hotelMapper.toDtos(trips);
     }
 }

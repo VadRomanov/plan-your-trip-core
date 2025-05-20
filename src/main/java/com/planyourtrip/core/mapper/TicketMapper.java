@@ -4,22 +4,20 @@ package com.planyourtrip.core.mapper;
 import com.planyourtrip.core.dto.TicketDto;
 import com.planyourtrip.core.entity.Ticket;
 import org.mapstruct.Mapper;
-import org.mapstruct.factory.Mappers;
+import org.mapstruct.Mapping;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
+import java.util.Set;
 
 @Mapper(componentModel = "spring")
 @Component
-public interface TicketMapper {
-    TicketMapper INSTANCE = Mappers.getMapper(TicketMapper.class);
+public interface TicketMapper extends BaseMapper {
 
- //   @Mapping(target = "trip", ignore = true)
+    @Mapping(target = "tripId", source = "ticket.trip.id")
     TicketDto toDto(Ticket ticket);
 
-//    @Mapping(target = "trip", ignore = true)
+    @Mapping(target = "trip", expression = "java(toTrip(dto.getTripId()))")
     Ticket toEntity(TicketDto dto);
 
-//    @Mapping(target = "trip", ignore = true)
-    List<TicketDto> toDtoList(List<Ticket> tickets);
+    Set<TicketDto> toDtos(Set<Ticket> tickets);
 }

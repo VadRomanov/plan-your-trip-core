@@ -18,8 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/users")
-@Tag(name = "Users", description = "API для управления пользователями Telegram")
+@RequestMapping("/api/user")
+@Tag(name = "Users", description = "API для управления пользователями")
 @RequiredArgsConstructor
 public class UserController {
 

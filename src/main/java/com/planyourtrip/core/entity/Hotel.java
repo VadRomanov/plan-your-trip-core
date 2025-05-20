@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.time.OffsetDateTime;
 
 @Entity
 @Table(name = "hotels")
@@ -20,7 +21,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Setter
 @Getter
-public class Hotel {
+public class Hotel extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -33,4 +34,5 @@ public class Hotel {
     private LocalDate checkInDate;
     private LocalDate checkOutDate;
     private String address;
+    private OffsetDateTime createdAt;
 }

@@ -2,30 +2,57 @@ package com.planyourtrip.core.mapper;
 
 
 import com.planyourtrip.core.dto.TripDto;
+import com.planyourtrip.core.entity.BaseEntity;
 import com.planyourtrip.core.entity.Trip;
+import com.planyourtrip.core.entity.User;
 import org.mapstruct.Mapper;
-import org.mapstruct.factory.Mappers;
+import org.mapstruct.Mapping;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
+import java.util.Collections;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import static java.util.Objects.isNull;
 
 @Mapper(componentModel = "spring")
 @Component
 public interface TripMapper {
-    TripMapper INSTANCE = Mappers.getMapper(TripMapper.class);
 
- //   @Mapping(target = "tickets", ignore = true)
- //   @Mapping(target = "hotels", ignore = true)
- //   @Mapping(target = "notes", ignore = true)
+    @Mapping(target = "ticketIds", expression = "java(toIds(trip.getTickets()))")
+    @Mapping(target = "hotelIds", expression = "java(toIds(trip.getHotels()))")
+    @Mapping(target = "noteIds", expression = "java(toIds(trip.getNotes()))")
+    @Mapping(target = "userIds", expression = "java(toIds(trip.getUsers()))")
     TripDto toDto(Trip trip);
 
-  //  @Mapping(target = "tickets", ignore = true)
-  //  @Mapping(target = "hotels", ignore = true)
-  //  @Mapping(target = "notes", ignore = true)
+    @Mapping(target = "users", expression = "java(toUsers(dto.getUserIds()))")
     Trip toEntity(TripDto dto);
 
- //   @Mapping(target = "tickets", ignore = true)
- //   @Mapping(target = "hotels", ignore = true)
- //   @Mapping(target = "notes", ignore = true)
-    List<TripDto> toDtoList(List<Trip> trips);
+    @Mapping(target = "ticketIds", expression = "java(toIds(trip.getTickets()))")
+    @Mapping(target = "hotelIds", expression = "java(toIds(trip.getHotels()))")
+    @Mapping(target = "noteIds", expression = "java(toIds(trip.getNotes()))")
+    @Mapping(target = "userIds", expression = "java(toIds(trip.getUsers()))")
+    Set<TripDto> toDtos(Set<Trip> trips);
+
+    default Set<Long> toIds(Set<? extends BaseEntity> entities) {
+        if (isNull(entities)) {
+            return Collections.emptySet();
+        }
+        return entities.stream()
+                .map(BaseEntity::getId)
+                .collect(Collectors.toSet());
+    }
+
+    default Set<User> toUsers(Set<Long> ids) {
+        if (isNull(ids)) {
+            return Collections.emptySet();
+        }
+        return ids.stream()
+                .map(id -> {
+                    var user = new User();
+                    user.setId(id);
+                    return user;
+                })
+                .collect(Collectors.toSet());
+    }
 }

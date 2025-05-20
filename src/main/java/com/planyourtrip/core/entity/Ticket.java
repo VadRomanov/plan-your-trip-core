@@ -17,6 +17,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 @Entity
 @Table(name = "tickets")
@@ -24,7 +25,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Setter
 @Getter
-public class Ticket {
+public class Ticket extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -35,10 +36,10 @@ public class Ticket {
 
     @Enumerated(EnumType.STRING)
     private TicketType type;
-
     private String departure;
     private String arrival;
     private LocalDateTime departureTime;
     private LocalDateTime arrivalTime;
     private String fileUrl;
+    private OffsetDateTime createdAt;
 }
