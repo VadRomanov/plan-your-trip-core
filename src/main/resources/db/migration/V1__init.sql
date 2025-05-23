@@ -17,7 +17,7 @@ CREATE TABLE trips (
     end_date DATE,
     expired BOOLEAN,
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-    CONSTRAINT check_start_before_end CHECK (start_date < end_date)
+    CONSTRAINT check_start_before_end CHECK (start_date <= end_date)
 );
 
 CREATE TABLE trip_users (
