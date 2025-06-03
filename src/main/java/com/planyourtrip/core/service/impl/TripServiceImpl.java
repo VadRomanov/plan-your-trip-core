@@ -29,10 +29,7 @@ public class TripServiceImpl implements TripService {
 
     @Override
     public TripDto createTrip(TripDto dto) {
-        if (dto.getEndDate().isBefore(LocalDate.now())) {
-            dto.setExpired(true);
-        }
-        var trip = tripMapper.toEntity(dto);
+        var trip = tripMapper.toEntity(setExpiredIfNeeded(dto));
         var savedTrip = tripRepository.save(trip);
 
         return tripMapper.toDto(savedTrip);
@@ -40,7 +37,7 @@ public class TripServiceImpl implements TripService {
 
     @Override
     public TripDto updateTrip(TripDto dto) {
-        var trip = tripMapper.toEntity(dto);
+        var trip = tripMapper.toEntity(setExpiredIfNeeded(dto));
         var savedTrip = tripRepository.save(trip);
 
         return tripMapper.toDto(savedTrip);
@@ -58,7 +55,7 @@ public class TripServiceImpl implements TripService {
                         .params(List.of(TABLE_NAME, id))
                         .build());
 
-        return tripMapper.toDto(trip);
+        return setExpiredIfNeeded(tripMapper.toDto(trip));
     }
 
     @Override
@@ -66,6 +63,13 @@ public class TripServiceImpl implements TripService {
         var userDto = userService.getByTelegramId(telegramUserId);
         var trips = tripRepository.findByUsers(userMapper.toEntity(userDto));
 
-        return tripMapper.toDtos(trips);
+        return tripMapper.toDtos(trips)
+                .stream()
+                .map(this::setExpiredIfNeeded)
+                .toList();
+    }
+
+    private TripDto setExpiredIfNeeded(TripDto tripDto) {
+        return tripDto.setExpired(tripDto.getEndDate().isBefore(LocalDate.now()));
     }
 }

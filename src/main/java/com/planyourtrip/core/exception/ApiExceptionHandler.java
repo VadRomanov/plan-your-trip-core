@@ -41,7 +41,17 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
         return buildResponse(HttpStatus.NOT_FOUND, e.getMessage());
     }
 
-    @ExceptionHandler(BindException.class)
+  @ExceptionHandler(BusinessException.class)
+  public ResponseEntity<BackendApiResponse> handleBusinessException(BusinessException e) {
+    if (e.getResponseCode().equals(ResponseCode.ENTITY_NOT_FOUND)) {
+      log.error(e.getMessage(), e);
+      return buildResponse(HttpStatus.NOT_FOUND, e.getMessage());
+    } else {
+      return handleGeneral(e);
+    }
+  }
+
+  @ExceptionHandler(BindException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<BackendApiResponse> handleBindException(BindException e) {
         log.error(e.getMessage(), e);

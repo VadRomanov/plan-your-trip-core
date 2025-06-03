@@ -21,7 +21,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto saveOrUpdate(UserDto dto) {
         var user = userMapper.toEntity(dto);
-        var savedUser = userRepository.save(user);
+        var savedUser = userRepository.findByTelegramId(dto.getTelegramId())
+                .orElseGet(() -> userRepository.save(user));
 
         return userMapper.toDto(savedUser);
     }
