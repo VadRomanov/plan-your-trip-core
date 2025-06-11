@@ -2,12 +2,26 @@ version: '3.9'
 name: plan-your-trip
 
 services:
-  plan-your-trip-postgres:
+  plan-your-trip-db:
     image: 'postgres:14-alpine'
-    container_name: plan-your-trip-postgres
+    container_name: plan-your-trip-db
     ports:
       - "5440:5432"
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: plan_your_trip
+
+  plan-your-trip-core:
+    image: 'plan-your-trip-core:latest'
+    container_name: plan-your-trip-core
+    environment:
+      - DB_URL=jdbc:postgresql://plan-your-trip-db:5432/plan_your_trip
+      - JDK_JAVA_OPTIONS=-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=*:4001
+    ports:
+      - "8180:8080"
+      - "4001:4001"
+    volumes:
+      - ./logs:/app/logs
+    depends_on:
+      - plan-your-trip-db
