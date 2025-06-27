@@ -1,6 +1,9 @@
 package com.planyourtrip.core.entity;
 
+import com.planyourtrip.core.dto.AccommodationType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -30,6 +33,8 @@ public class Hotel extends BaseEntity {
     @JoinColumn(name = "trip_id")
     private Trip trip;
 
+    @Enumerated(EnumType.STRING)
+    private AccommodationType type;
     private String name;
     private LocalDate checkInDate;
     private LocalDate checkOutDate;

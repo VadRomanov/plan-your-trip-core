@@ -13,6 +13,7 @@ public class HotelDto {
     private Long id;
     @NonNull
     private Long tripId;
+    private AccommodationType type;
     private String name;
     private LocalDate checkInDate;
     private LocalDate checkOutDate;

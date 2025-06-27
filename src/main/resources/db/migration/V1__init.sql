@@ -32,6 +32,7 @@ CREATE TABLE trip_users (
 CREATE TABLE hotels (
     id BIGSERIAL PRIMARY KEY,
     trip_id BIGINT NOT NULL,
+    type VARCHAR(50), -- hotel, apartments, etc.
     name VARCHAR(255),
     address VARCHAR(500),
     check_in_date DATE,
