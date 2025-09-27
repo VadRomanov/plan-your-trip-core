@@ -14,5 +14,6 @@ public class NoteDto {
     private Long tripId;
     @NonNull
     private String content;
+    private String title;
     private OffsetDateTime createdAt;
 }

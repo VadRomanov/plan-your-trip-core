@@ -31,5 +31,6 @@ public class Note extends BaseEntity {
     private Trip trip;
 
     private String content;
+    private String title;
     private OffsetDateTime createdAt;
 }

@@ -61,6 +61,7 @@ CREATE TABLE tickets (
 CREATE TABLE notes (
     id BIGSERIAL PRIMARY KEY,
     trip_id BIGINT NOT NULL,
+    title TEXT,
     content TEXT NOT NULL,
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     CONSTRAINT fk_trip_note FOREIGN KEY (trip_id) REFERENCES trips(id) ON DELETE CASCADE
