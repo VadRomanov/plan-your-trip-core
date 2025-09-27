@@ -16,7 +16,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 
 @Entity
@@ -38,8 +37,8 @@ public class Ticket extends BaseEntity {
     private TicketType type;
     private String departure;
     private String arrival;
-    private LocalDateTime departureTime;
-    private LocalDateTime arrivalTime;
+    private OffsetDateTime departureTime;
+    private OffsetDateTime arrivalTime;
     private String fileUrl;
     private OffsetDateTime createdAt;
 }

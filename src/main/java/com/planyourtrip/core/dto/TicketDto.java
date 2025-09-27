@@ -4,7 +4,6 @@ import lombok.Data;
 import lombok.NonNull;
 import lombok.experimental.Accessors;
 
-import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 
 @Data
@@ -16,8 +15,8 @@ public class TicketDto {
     private TicketType type;
     private String departure;
     private String arrival;
-    private LocalDateTime departureTime;
-    private LocalDateTime arrivalTime;
+    private OffsetDateTime departureTime;
+    private OffsetDateTime arrivalTime;
     private String fileUrl;
     private OffsetDateTime createdAt;
 }
