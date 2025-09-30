@@ -6,7 +6,8 @@ CREATE TABLE users (
     first_name VARCHAR(100),
     last_name VARCHAR(100),
     language_code VARCHAR(10),
-    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMPTZ
 );
 
 -- TRIPS
@@ -17,6 +18,7 @@ CREATE TABLE trips (
     end_date DATE,
     expired BOOLEAN,
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMPTZ,
     CONSTRAINT check_start_before_end CHECK (start_date <= end_date)
 );
 
@@ -38,6 +40,7 @@ CREATE TABLE hotels (
     check_in_date DATE,
     check_out_date DATE,
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMPTZ,
     CONSTRAINT fk_trip_hotel FOREIGN KEY (trip_id) REFERENCES trips(id) ON DELETE CASCADE,
     CONSTRAINT check_start_before_end CHECK (check_in_date < check_out_date)
 );
@@ -53,6 +56,7 @@ CREATE TABLE tickets (
     arrival_time TIMESTAMPTZ,
     file_url VARCHAR(500),
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMPTZ,
     CONSTRAINT fk_trip_ticket FOREIGN KEY (trip_id) REFERENCES trips(id) ON DELETE CASCADE,
     CONSTRAINT check_start_before_end CHECK (departure_time < arrival_time)
 );
@@ -64,5 +68,6 @@ CREATE TABLE notes (
     title TEXT,
     content TEXT NOT NULL,
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMPTZ,
     CONSTRAINT fk_trip_note FOREIGN KEY (trip_id) REFERENCES trips(id) ON DELETE CASCADE
 );

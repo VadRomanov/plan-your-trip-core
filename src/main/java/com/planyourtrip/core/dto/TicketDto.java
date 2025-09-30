@@ -19,4 +19,5 @@ public class TicketDto {
     private OffsetDateTime arrivalTime;
     private String fileUrl;
     private OffsetDateTime createdAt;
+    private OffsetDateTime updatedAt;
 }

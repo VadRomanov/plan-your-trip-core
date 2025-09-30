@@ -35,6 +35,7 @@ public class User extends BaseEntity {
     private String lastName;
     private String languageCode;
     private OffsetDateTime createdAt;
+    private OffsetDateTime updatedAt;
 
     @ManyToMany(mappedBy = "users")
     private Set<Trip> trips = new HashSet<>();

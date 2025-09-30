@@ -16,4 +16,5 @@ public class NoteDto {
     private String content;
     private String title;
     private OffsetDateTime createdAt;
+    private OffsetDateTime updatedAt;
 }

@@ -41,4 +41,5 @@ public class Ticket extends BaseEntity {
     private OffsetDateTime arrivalTime;
     private String fileUrl;
     private OffsetDateTime createdAt;
+    private OffsetDateTime updatedAt;
 }

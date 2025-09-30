@@ -33,4 +33,5 @@ public class Note extends BaseEntity {
     private String content;
     private String title;
     private OffsetDateTime createdAt;
+    private OffsetDateTime updatedAt;
 }

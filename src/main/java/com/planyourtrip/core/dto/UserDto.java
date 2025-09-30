@@ -16,5 +16,6 @@ public class UserDto {
     private String lastName;
     private String languageCode;
     private OffsetDateTime createdAt;
+    private OffsetDateTime updatedAt;
     private Set<Long> tripIds;
 }

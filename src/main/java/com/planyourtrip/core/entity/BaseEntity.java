@@ -2,6 +2,7 @@ package com.planyourtrip.core.entity;
 
 import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 
 import java.time.OffsetDateTime;
 
@@ -21,5 +22,10 @@ public abstract class BaseEntity {
         if (isNull(getCreatedAt())) {
             setCreatedAt(OffsetDateTime.now());
         }
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        setCreatedAt(OffsetDateTime.now());
     }
 }
