@@ -39,6 +39,7 @@ CREATE TABLE hotels (
     address VARCHAR(500),
     check_in_date DATE,
     check_out_date DATE,
+    file_url VARCHAR(500),
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     updated_at TIMESTAMPTZ,
     CONSTRAINT fk_trip_hotel FOREIGN KEY (trip_id) REFERENCES trips(id) ON DELETE CASCADE,
