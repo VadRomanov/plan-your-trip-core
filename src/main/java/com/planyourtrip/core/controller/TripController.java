@@ -7,6 +7,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -75,5 +77,17 @@ public class TripController {
     @GetMapping("/{id}")
     public ResponseEntity<TripDto> getTripById(@PathVariable Long id) {
         return ResponseEntity.ok(tripService.getTripById(id));
+    }
+
+    @Operation(summary = "Получить краткое содержание поездки в pdf по ID")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Краткое содержание получено")
+    })
+    @GetMapping("/{id}/summary")
+    public ResponseEntity<byte[]> getTripSummary(@PathVariable Long id) {
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=trip-summary.pdf")
+                .contentType(MediaType.APPLICATION_PDF)
+                .body(tripService.getTripSummary(id));
     }
 }

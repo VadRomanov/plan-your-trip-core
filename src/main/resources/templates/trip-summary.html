@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${trip.name}">План поездки</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            color: #333;
+        }
+        header {
+            text-align: center;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #2E64FE;
+        }
+        header h1 {
+            margin: 0;
+            color: #2E64FE;
+        }
+        header p {
+            margin: 5px 0;
+        }
+        section {
+            margin-top: 30px;
+        }
+        h2 {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #2E64FE;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px;
+        }
+        th {
+            background-color: #f5f7fb;
+            text-align: left;
+        }
+        .notes {
+            background: #f9f9f9;
+            border-left: 4px solid #2E64FE;
+            padding: 10px 15px;
+        }
+        .notes h3 {
+            margin-top: 0;
+        }
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 12px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1 th:text="${trip.name}">План поездки</h1>
+    <p>
+        <span th:text="${trip.startDate}">10.10.2025</span> –
+        <span th:text="${trip.endDate}">20.10.2025</span>
+    </p>
+</header>
+
+<!-- Размещение -->
+<section>
+    <h2>Размещение</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>Тип</th>
+            <th>Название</th>
+            <th>Дата заселения</th>
+            <th>Дата выезда</th>
+            <th>Адрес</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="hotel : ${hotels}">
+            <td th:text="${hotel.type}">Отель</td>
+            <td th:text="${hotel.name}">Hotel Paris Centre</td>
+            <td th:text="${hotel.checkInDate}">10.10.2025</td>
+            <td th:text="${hotel.checkOutDate}">13.10.2025</td>
+            <td th:text="${hotel.address}">Париж, ул. Риволи, 123</td>
+        </tr>
+        </tbody>
+    </table>
+</section>
+
+<!-- Билеты -->
+<section>
+    <h2>Билеты</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>Тип</th>
+            <th>Откуда</th>
+            <th>Куда</th>
+            <th>Время отправления</th>
+            <th>Время прибытия</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="ticket : ${tickets}">
+            <td th:text="${ticket.type}">Самолёт</td>
+            <td th:text="${ticket.departure}">Москва</td>
+            <td th:text="${ticket.arrival}">Париж</td>
+            <td th:text="${ticket.departureTime}">10.10.2025 10:00</td>
+            <td th:text="${ticket.arrivalTime}">10.10.2025 12:00</td>
+        </tr>
+        </tbody>
+    </table>
+</section>
+
+<!-- Заметки -->
+<section>
+    <h2>Заметки</h2>
+    <div class="notes" th:each="note : ${notes}">
+        <h3 th:text="${note.title}">Посетить</h3>
+        <p th:text="${note.content}">Лувр и Эйфелева башня</p>
+    </div>
+</section>
+
+<footer>
+    © 2025 Plan Your Trip. Все права защищены.
+</footer>
+
+</body>
+</html>

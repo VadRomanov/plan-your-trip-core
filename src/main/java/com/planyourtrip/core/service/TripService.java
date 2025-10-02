@@ -14,4 +14,6 @@ public interface TripService {
     TripDto getTripById(Long id);
 
     Collection<TripDto> getTripsByUser(Long telegramUserId);
+
+    byte[] getTripSummary(Long id);
 }
