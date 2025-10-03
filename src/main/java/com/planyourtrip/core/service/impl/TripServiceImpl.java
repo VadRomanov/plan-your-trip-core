@@ -6,10 +6,6 @@ import com.planyourtrip.core.exception.ResponseCode;
 import com.planyourtrip.core.mapper.TripMapper;
 import com.planyourtrip.core.mapper.UserMapper;
 import com.planyourtrip.core.repository.TripRepository;
-import com.planyourtrip.core.service.HotelService;
-import com.planyourtrip.core.service.NoteService;
-import com.planyourtrip.core.service.PdfService;
-import com.planyourtrip.core.service.TicketService;
 import com.planyourtrip.core.service.TripService;
 import com.planyourtrip.core.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -26,14 +22,10 @@ import java.util.List;
 public class TripServiceImpl implements TripService {
     private static final String TABLE_NAME = "trips";
 
-    private final HotelService hotelService;
-    private final TicketService ticketService;
-    private final NoteService noteService;
     private final TripRepository tripRepository;
     private final UserService userService;
     private final UserMapper userMapper;
     private final TripMapper tripMapper;
-    private final PdfService pdfService;
 
     @Override
     public TripDto createTrip(TripDto dto) {
@@ -75,16 +67,6 @@ public class TripServiceImpl implements TripService {
                 .stream()
                 .map(this::setExpiredIfNeeded)
                 .toList();
-    }
-
-    @Override
-    public byte[] getTripSummary(Long id) {
-        //todo: каждая сущность достается 2 раза, сначала с поездками потом поотдельности
-        var trip = getTripById(id);
-        var hotels = hotelService.getHotelsByTripId(id);
-        var tickets = ticketService.getTicketsByTripId(id);
-        var notes = noteService.getNotesByTripId(id);
-        return pdfService.generatePdf(trip, hotels, tickets, notes);
     }
 
     private TripDto setExpiredIfNeeded(TripDto tripDto) {

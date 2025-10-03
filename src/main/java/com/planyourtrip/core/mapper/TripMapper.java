@@ -2,6 +2,7 @@ package com.planyourtrip.core.mapper;
 
 
 import com.planyourtrip.core.dto.TripDto;
+import com.planyourtrip.core.dto.TripSummaryDto;
 import com.planyourtrip.core.entity.BaseEntity;
 import com.planyourtrip.core.entity.Trip;
 import com.planyourtrip.core.entity.User;
@@ -19,20 +20,22 @@ import static java.util.Objects.isNull;
 @Component
 public interface TripMapper {
 
-    @Mapping(target = "ticketIds", expression = "java(toIds(trip.getTickets()))")
-    @Mapping(target = "hotelIds", expression = "java(toIds(trip.getHotels()))")
-    @Mapping(target = "noteIds", expression = "java(toIds(trip.getNotes()))")
-    @Mapping(target = "userIds", expression = "java(toIds(trip.getUsers()))")
+    @Mapping(target = "ticketIds", source = "tickets", qualifiedByName = "toIds")
+    @Mapping(target = "hotelIds", source = "hotels", qualifiedByName = "toIds")
+    @Mapping(target = "noteIds", source = "notes", qualifiedByName = "toIds")
+    @Mapping(target = "userIds", source = "users", qualifiedByName = "toIds")
     TripDto toDto(Trip trip);
 
-    @Mapping(target = "users", expression = "java(toUsers(dto.getUserIds()))")
+    @Mapping(target = "users", source = "userIds", qualifiedByName = "toUsers")
     Trip toEntity(TripDto dto);
 
-    @Mapping(target = "ticketIds", expression = "java(toIds(trip.getTickets()))")
-    @Mapping(target = "hotelIds", expression = "java(toIds(trip.getHotels()))")
-    @Mapping(target = "noteIds", expression = "java(toIds(trip.getNotes()))")
-    @Mapping(target = "userIds", expression = "java(toIds(trip.getUsers()))")
+    @Mapping(target = "ticketIds", source = "tickets", qualifiedByName = "toIds")
+    @Mapping(target = "hotelIds", source = "hotels", qualifiedByName = "toIds")
+    @Mapping(target = "noteIds", source = "notes", qualifiedByName = "toIds")
+    @Mapping(target = "userIds", source = "users", qualifiedByName = "toIds")
     Set<TripDto> toDtos(Set<Trip> trips);
+
+    TripSummaryDto toSummaryDto(Trip trip);
 
     default Set<Long> toIds(Set<? extends BaseEntity> entities) {
         if (isNull(entities)) {

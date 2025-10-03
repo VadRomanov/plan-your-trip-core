@@ -2,6 +2,7 @@ package com.planyourtrip.core.controller;
 
 import com.planyourtrip.core.dto.TripDto;
 import com.planyourtrip.core.service.TripService;
+import com.planyourtrip.core.service.TripSummaryService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -28,6 +29,7 @@ import java.util.Collection;
 @RequiredArgsConstructor
 public class TripController {
 
+    private final TripSummaryService tripSummaryService;
     private final TripService tripService;
 
     @Operation(summary = "Получить все поездки пользователя по Telegram ID")
@@ -79,15 +81,15 @@ public class TripController {
         return ResponseEntity.ok(tripService.getTripById(id));
     }
 
-    @Operation(summary = "Получить краткое содержание поездки в pdf по ID")
+    @Operation(summary = "Получить краткое содержание поездки по ID в pdf")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Краткое содержание получено")
     })
     @GetMapping("/{id}/summary")
-    public ResponseEntity<byte[]> getTripSummary(@PathVariable Long id) {
+    public ResponseEntity<byte[]> getTripSummaryPdf(@PathVariable Long id) {
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=trip-summary.pdf")
                 .contentType(MediaType.APPLICATION_PDF)
-                .body(tripService.getTripSummary(id));
+                .body(tripSummaryService.getTripSummaryPdfById(id));
     }
 }
