@@ -1,4 +1,4 @@
-package com.planyourtrip.core.dto;
+package com.planyourtrip.core.dto.domain;
 
 import lombok.Data;
 import lombok.experimental.Accessors;

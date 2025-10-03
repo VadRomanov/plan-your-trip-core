@@ -1,7 +1,7 @@
 
 package com.planyourtrip.core.entity;
 
-import com.planyourtrip.core.dto.TicketType;
+import com.planyourtrip.core.dto.domain.TicketType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;

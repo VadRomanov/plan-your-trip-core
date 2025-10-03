@@ -1,6 +1,7 @@
 package com.planyourtrip.core.service.impl;
 
-import com.planyourtrip.core.dto.TripSummaryDto;
+import com.planyourtrip.core.dto.TripSummaryFileDto;
+import com.planyourtrip.core.dto.domain.TripSummaryDto;
 import com.planyourtrip.core.exception.BusinessException;
 import com.planyourtrip.core.exception.ResponseCode;
 import com.planyourtrip.core.mapper.TripMapper;
@@ -22,18 +23,29 @@ public class TripSummaryServiceImpl implements TripSummaryService {
     private static final String TABLE_NAME = "trips";
     private static final String TEMPLATE_NAME = "trip-summary";
     private static final String TRIP_PLACEHOLDER = "trip";
-    private static final String HOTELS_PLACEHOLDER = "hotels";
+    private static final String ACCOMMODATIONS_PLACEHOLDER = "accommodations";
     private static final String TICKETS_PLACEHOLDER = "tickets";
     private static final String NOTES_PLACEHOLDER = "notes";
+    private static final String PDF_EXTENSION = ".pdf";
 
     private final TemplateEngine templateEngine;
     private final TripRepository tripRepository;
     private final TripMapper tripMapper;
 
     @Override
-    public byte[] getTripSummaryPdfById(long id) {
+    public TripSummaryFileDto getTripSummaryPdfById(long id) {
         var tripSummary = getTripSummaryDto(id);
-        return createTripSummaryPdf(tripSummary);
+        var html = createTripSummaryHtml(tripSummary);
+        var body = PdfUtil.generatePdfFromHtml(html);
+        return new TripSummaryFileDto()
+                .setFileName(tripSummary.getName() + PDF_EXTENSION)
+                .setBody(body);
+    }
+
+    @Override
+    public String getTripSummaryTextById(long id) {
+        var tripSummary = getTripSummaryDto(id);
+        return createTripSummaryHtml(tripSummary);
     }
 
     private TripSummaryDto getTripSummaryDto(long id) {
@@ -44,15 +56,13 @@ public class TripSummaryServiceImpl implements TripSummaryService {
         return tripMapper.toSummaryDto(trip);
     }
 
-    private byte[] createTripSummaryPdf(TripSummaryDto tripSummary) {
+    private String createTripSummaryHtml(TripSummaryDto tripSummary) {
         var context = new Context();
         context.setVariable(TRIP_PLACEHOLDER, tripSummary);
-        context.setVariable(HOTELS_PLACEHOLDER, tripSummary.getHotels());
+        context.setVariable(ACCOMMODATIONS_PLACEHOLDER, tripSummary.getAccommodations());
         context.setVariable(TICKETS_PLACEHOLDER, tripSummary.getTickets());
         context.setVariable(NOTES_PLACEHOLDER, tripSummary.getNotes());
 
-        var html = templateEngine.process(TEMPLATE_NAME, context);
-
-        return PdfUtil.generatePdfFromHtml(html);
+        return templateEngine.process(TEMPLATE_NAME, context);
     }
 }

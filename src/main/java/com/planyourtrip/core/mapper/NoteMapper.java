@@ -1,7 +1,7 @@
 package com.planyourtrip.core.mapper;
 
 
-import com.planyourtrip.core.dto.NoteDto;
+import com.planyourtrip.core.dto.domain.NoteDto;
 import com.planyourtrip.core.entity.Note;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

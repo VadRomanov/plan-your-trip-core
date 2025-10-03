@@ -1,7 +1,7 @@
 package com.planyourtrip.core.controller;
 
-import com.planyourtrip.core.dto.HotelDto;
-import com.planyourtrip.core.service.HotelService;
+import com.planyourtrip.core.dto.domain.AccommodationDto;
+import com.planyourtrip.core.service.AccommodationService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -21,41 +21,42 @@ import java.util.Collection;
 
 @Slf4j
 @RestController
-@RequestMapping("/api/hotel")
-@Tag(name = "Hotels", description = "API для управления бронированиями отелей")
+@RequestMapping("/api/accommodation")
+@Tag(name = "Accommodations", description = "API для управления бронированиями отелей")
 @RequiredArgsConstructor
-public class HotelController {
+public class AccommodationController {
 
-    private final HotelService hotelService;
+    private final AccommodationService accommodationService;
 
     @Operation(summary = "Получить список отелей для поездки")
     @GetMapping("/trip/{tripId}")
-    public ResponseEntity<Collection<HotelDto>> getHotelsByTrip(@PathVariable Long tripId) {
-        return ResponseEntity.ok(hotelService.getHotelsByTripId(tripId));
+    public ResponseEntity<Collection<AccommodationDto>> getAccommodationsByTrip(@PathVariable Long tripId) {
+        return ResponseEntity.ok(accommodationService.getAccommodationsByTripId(tripId));
     }
 
     @Operation(summary = "Создать бронирование отеля")
     @PostMapping
-    public ResponseEntity<HotelDto> createHotel(@RequestBody @Validated HotelDto hotelDto) {
-        return ResponseEntity.ok(hotelService.createHotel(hotelDto));
+    public ResponseEntity<AccommodationDto> createAccommodation(@RequestBody @Validated AccommodationDto accommodationDto) {
+        return ResponseEntity.ok(accommodationService.createAccommodation(accommodationDto));
     }
 
     @Operation(summary = "Обновить бронирование отеля")
     @PutMapping("/{id}")
-    public ResponseEntity<HotelDto> updateHotel(@PathVariable Long id, @RequestBody @Validated HotelDto hotelDto) {
-        return ResponseEntity.ok(hotelService.updateHotel(hotelDto.setId(id)));
+    public ResponseEntity<AccommodationDto> updateAccommodation(@PathVariable Long id, @RequestBody @Validated
+    AccommodationDto accommodationDto) {
+        return ResponseEntity.ok(accommodationService.updateAccommodation(accommodationDto.setId(id)));
     }
 
     @Operation(summary = "Удалить бронирование отеля")
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteHotel(@PathVariable Long id) {
-        hotelService.deleteHotel(id);
+    public ResponseEntity<Void> deleteAccommodation(@PathVariable Long id) {
+        accommodationService.deleteAccommodation(id);
         return ResponseEntity.noContent().build();
     }
 
     @Operation(summary = "Получить информацию об отеле по ID")
     @GetMapping("/{id}")
-    public ResponseEntity<HotelDto> getHotelById(@PathVariable Long id) {
-        return ResponseEntity.ok(hotelService.getHotelById(id));
+    public ResponseEntity<AccommodationDto> getAccommodationById(@PathVariable Long id) {
+        return ResponseEntity.ok(accommodationService.getAccommodationById(id));
     }
 }

@@ -1,23 +1,22 @@
-package com.planyourtrip.core.dto;
+package com.planyourtrip.core.dto.domain;
 
 import lombok.Data;
 import lombok.NonNull;
 import lombok.experimental.Accessors;
 
-import java.time.LocalDate;
 import java.time.OffsetDateTime;
 
 @Data
 @Accessors(chain = true)
-public class HotelDto {
+public class TicketDto {
     private Long id;
     @NonNull
     private Long tripId;
-    private AccommodationType type;
-    private String name;
-    private LocalDate checkInDate;
-    private LocalDate checkOutDate;
-    private String address;
+    private TicketType type;
+    private String departure;
+    private String arrival;
+    private OffsetDateTime departureTime;
+    private OffsetDateTime arrivalTime;
     private String fileUrl;
     private OffsetDateTime createdAt;
     private OffsetDateTime updatedAt;

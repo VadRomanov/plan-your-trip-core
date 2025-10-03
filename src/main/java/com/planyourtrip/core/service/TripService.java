@@ -1,6 +1,6 @@
 package com.planyourtrip.core.service;
 
-import com.planyourtrip.core.dto.TripDto;
+import com.planyourtrip.core.dto.domain.TripDto;
 
 import java.util.Collection;
 

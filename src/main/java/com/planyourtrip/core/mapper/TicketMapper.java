@@ -1,7 +1,7 @@
 package com.planyourtrip.core.mapper;
 
 
-import com.planyourtrip.core.dto.TicketDto;
+import com.planyourtrip.core.dto.domain.TicketDto;
 import com.planyourtrip.core.entity.Ticket;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

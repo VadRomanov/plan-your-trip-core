@@ -1,6 +1,6 @@
 package com.planyourtrip.core.controller;
 
-import com.planyourtrip.core.dto.TripDto;
+import com.planyourtrip.core.dto.domain.TripDto;
 import com.planyourtrip.core.service.TripService;
 import com.planyourtrip.core.service.TripSummaryService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -18,10 +19,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Collection;
+
+import static java.lang.String.format;
 
 @RestController
 @RequestMapping("/api/trip")
@@ -85,11 +89,23 @@ public class TripController {
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Краткое содержание получено")
     })
-    @GetMapping("/{id}/summary")
-    public ResponseEntity<byte[]> getTripSummaryPdf(@PathVariable Long id) {
-        return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=trip-summary.pdf")
-                .contentType(MediaType.APPLICATION_PDF)
-                .body(tripSummaryService.getTripSummaryPdfById(id));
+    @GetMapping(value = "/{id}/summary", produces = {MediaType.TEXT_HTML_VALUE, MediaType.APPLICATION_PDF_VALUE})
+    public ResponseEntity<?> getTripSummaryPdf(@PathVariable Long id,
+                                               @RequestHeader(HttpHeaders.ACCEPT) String acceptHeader) {
+        if (acceptHeader.equals(MediaType.APPLICATION_PDF_VALUE)) {
+            var tripSummaryFile = tripSummaryService.getTripSummaryPdfById(id);
+            return ResponseEntity.ok()
+                    .header(HttpHeaders.CONTENT_DISPOSITION,
+                            format("attachment; filename=%s.%s", tripSummaryFile.getFileName(),
+                                    MediaType.APPLICATION_PDF.getSubtype()))
+                    .contentType(MediaType.APPLICATION_PDF)
+                    .body(tripSummaryFile.getBody());
+        } else if (acceptHeader.equals(MediaType.TEXT_PLAIN_VALUE)) {
+            return ResponseEntity.ok()
+                    .contentType(MediaType.TEXT_HTML)
+                    .body(tripSummaryService.getTripSummaryTextById(id));
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).build();
+        }
     }
 }

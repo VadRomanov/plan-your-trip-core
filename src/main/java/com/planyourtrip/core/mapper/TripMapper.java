@@ -1,8 +1,8 @@
 package com.planyourtrip.core.mapper;
 
 
-import com.planyourtrip.core.dto.TripDto;
-import com.planyourtrip.core.dto.TripSummaryDto;
+import com.planyourtrip.core.dto.domain.TripDto;
+import com.planyourtrip.core.dto.domain.TripSummaryDto;
 import com.planyourtrip.core.entity.BaseEntity;
 import com.planyourtrip.core.entity.Trip;
 import com.planyourtrip.core.entity.User;
@@ -21,7 +21,7 @@ import static java.util.Objects.isNull;
 public interface TripMapper {
 
     @Mapping(target = "ticketIds", source = "tickets", qualifiedByName = "toIds")
-    @Mapping(target = "hotelIds", source = "hotels", qualifiedByName = "toIds")
+    @Mapping(target = "accommodationIds", source = "accommodations", qualifiedByName = "toIds")
     @Mapping(target = "noteIds", source = "notes", qualifiedByName = "toIds")
     @Mapping(target = "userIds", source = "users", qualifiedByName = "toIds")
     TripDto toDto(Trip trip);
@@ -30,7 +30,7 @@ public interface TripMapper {
     Trip toEntity(TripDto dto);
 
     @Mapping(target = "ticketIds", source = "tickets", qualifiedByName = "toIds")
-    @Mapping(target = "hotelIds", source = "hotels", qualifiedByName = "toIds")
+    @Mapping(target = "accommodationIds", source = "accommodations", qualifiedByName = "toIds")
     @Mapping(target = "noteIds", source = "notes", qualifiedByName = "toIds")
     @Mapping(target = "userIds", source = "users", qualifiedByName = "toIds")
     Set<TripDto> toDtos(Set<Trip> trips);

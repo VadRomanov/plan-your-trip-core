@@ -1,6 +1,6 @@
 package com.planyourtrip.core.service.impl;
 
-import com.planyourtrip.core.dto.TicketDto;
+import com.planyourtrip.core.dto.domain.TicketDto;
 import com.planyourtrip.core.exception.BusinessException;
 import com.planyourtrip.core.exception.ResponseCode;
 import com.planyourtrip.core.mapper.TicketMapper;

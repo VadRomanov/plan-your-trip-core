@@ -30,11 +30,11 @@ CREATE TABLE trip_users (
     CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
--- HOTELS
-CREATE TABLE hotels (
+-- ACCOMMODATIONS
+CREATE TABLE accommodations (
     id BIGSERIAL PRIMARY KEY,
     trip_id BIGINT NOT NULL,
-    type VARCHAR(50), -- hotel, apartments, etc.
+    type VARCHAR(50), -- accommodation, apartments, etc.
     name VARCHAR(255),
     address VARCHAR(500),
     check_in_date DATE,
@@ -42,7 +42,7 @@ CREATE TABLE hotels (
     file_url VARCHAR(500),
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     updated_at TIMESTAMPTZ,
-    CONSTRAINT fk_trip_hotel FOREIGN KEY (trip_id) REFERENCES trips(id) ON DELETE CASCADE,
+    CONSTRAINT fk_trip_accommodation FOREIGN KEY (trip_id) REFERENCES trips(id) ON DELETE CASCADE,
     CONSTRAINT check_start_before_end CHECK (check_in_date < check_out_date)
 );
 

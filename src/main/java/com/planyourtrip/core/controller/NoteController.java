@@ -1,6 +1,6 @@
 package com.planyourtrip.core.controller;
 
-import com.planyourtrip.core.dto.NoteDto;
+import com.planyourtrip.core.dto.domain.NoteDto;
 import com.planyourtrip.core.service.NoteService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

@@ -83,12 +83,12 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="hotel : ${hotels}">
-            <td th:text="${hotel.type}">Отель</td>
-            <td th:text="${hotel.name}">Hotel Paris Centre</td>
-            <td th:text="${hotel.checkInDate}">10.10.2025</td>
-            <td th:text="${hotel.checkOutDate}">13.10.2025</td>
-            <td th:text="${hotel.address}">Париж, ул. Риволи, 123</td>
+        <tr th:each="accommodation : ${accommodations}">
+            <td th:text="${accommodation.type}">Отель</td>
+            <td th:text="${accommodation.name}">Hotel Paris Centre</td>
+            <td th:text="${accommodation.checkInDate}">10.10.2025</td>
+            <td th:text="${accommodation.checkOutDate}">13.10.2025</td>
+            <td th:text="${accommodation.address}">Париж, ул. Риволи, 123</td>
         </tr>
         </tbody>
     </table>

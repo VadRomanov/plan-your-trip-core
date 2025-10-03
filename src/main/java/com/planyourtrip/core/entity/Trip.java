@@ -41,7 +41,7 @@ public class Trip extends BaseEntity {
     private Set<Ticket> tickets;
 
     @OneToMany(mappedBy = "trip", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Hotel> hotels;
+    private Set<Accommodation> accommodations;
 
     @OneToMany(mappedBy = "trip", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Note> notes;

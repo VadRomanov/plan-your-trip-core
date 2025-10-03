@@ -1,6 +1,6 @@
 package com.planyourtrip.core.controller;
 
-import com.planyourtrip.core.dto.UserDto;
+import com.planyourtrip.core.dto.domain.UserDto;
 import com.planyourtrip.core.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;

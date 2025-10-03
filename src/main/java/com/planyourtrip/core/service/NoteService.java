@@ -1,6 +1,6 @@
 package com.planyourtrip.core.service;
 
-import com.planyourtrip.core.dto.NoteDto;
+import com.planyourtrip.core.dto.domain.NoteDto;
 
 import java.util.Collection;
 

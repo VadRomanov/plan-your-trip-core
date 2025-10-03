@@ -1,6 +1,6 @@
 package com.planyourtrip.core.service.impl;
 
-import com.planyourtrip.core.dto.UserDto;
+import com.planyourtrip.core.dto.domain.UserDto;
 import com.planyourtrip.core.mapper.UserMapper;
 import com.planyourtrip.core.repository.UserRepository;
 import com.planyourtrip.core.service.UserService;

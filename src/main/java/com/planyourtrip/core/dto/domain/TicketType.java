@@ -1,4 +1,4 @@
-package com.planyourtrip.core.dto;
+package com.planyourtrip.core.dto.domain;
 
 public enum TicketType {
     FLIGHT,

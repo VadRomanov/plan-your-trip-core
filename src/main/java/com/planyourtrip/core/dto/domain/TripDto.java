@@ -1,4 +1,4 @@
-package com.planyourtrip.core.dto;
+package com.planyourtrip.core.dto.domain;
 
 import lombok.Data;
 import lombok.NonNull;
@@ -20,7 +20,7 @@ public class TripDto {
     private OffsetDateTime createdAt;
     private OffsetDateTime updatedAt;
     private Set<Long> ticketIds;
-    private Set<Long> hotelIds;
+    private Set<Long> accommodationIds;
     private Set<Long> noteIds;
     @NonNull
     private Set<Long> userIds;

@@ -1,5 +1,9 @@
 package com.planyourtrip.core.service;
 
+import com.planyourtrip.core.dto.TripSummaryFileDto;
+
 public interface TripSummaryService {
-    byte[] getTripSummaryPdfById(long id);
+    TripSummaryFileDto getTripSummaryPdfById(long id);
+
+    String getTripSummaryTextById(long id);
 }

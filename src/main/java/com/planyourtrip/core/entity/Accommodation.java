@@ -1,6 +1,6 @@
 package com.planyourtrip.core.entity;
 
-import com.planyourtrip.core.dto.AccommodationType;
+import com.planyourtrip.core.dto.domain.AccommodationType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -19,12 +19,12 @@ import java.time.LocalDate;
 import java.time.OffsetDateTime;
 
 @Entity
-@Table(name = "hotels")
+@Table(name = "accommodations")
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
 @Getter
-public class Hotel extends BaseEntity {
+public class Accommodation extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
