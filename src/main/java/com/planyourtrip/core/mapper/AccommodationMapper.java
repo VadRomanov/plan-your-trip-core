@@ -16,7 +16,7 @@ public interface AccommodationMapper extends BaseMapper {
     @Mapping(target = "tripId", source = "accommodation.trip.id")
     AccommodationDto toDto(Accommodation accommodation);
 
-    @Mapping(target = "trip", expression = "java(toTrip(dto.getTripId()))")
+    @Mapping(target = "trip", source = "tripId", qualifiedByName = "toTrip")
     Accommodation toEntity(AccommodationDto dto);
 
     Set<AccommodationDto> toDtos(Set<Accommodation> accommodations);

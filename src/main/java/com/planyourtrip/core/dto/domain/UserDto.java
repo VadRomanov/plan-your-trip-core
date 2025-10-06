@@ -9,8 +9,8 @@ import java.util.Set;
 @Data
 @Accessors(chain = true)
 public class UserDto {
-    private Long id;
-    private Long telegramId;
+    private long id;
+    private long telegramId;
     private String username;
     private String firstName;
     private String lastName;

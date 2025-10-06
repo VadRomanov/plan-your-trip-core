@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -41,17 +42,17 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
         return buildResponse(HttpStatus.NOT_FOUND, e.getMessage());
     }
 
-  @ExceptionHandler(BusinessException.class)
-  public ResponseEntity<BackendApiResponse> handleBusinessException(BusinessException e) {
-    if (e.getResponseCode().equals(ResponseCode.ENTITY_NOT_FOUND)) {
-      log.error(e.getMessage(), e);
-      return buildResponse(HttpStatus.NOT_FOUND, e.getMessage());
-    } else {
-      return handleGeneral(e);
+    @ExceptionHandler(BusinessException.class)
+    public ResponseEntity<BackendApiResponse> handleBusinessException(BusinessException e) {
+        if (e.getResponseCode().equals(ResponseCode.ENTITY_NOT_FOUND)) {
+            log.error(e.getMessage(), e);
+            return buildResponse(HttpStatus.NOT_FOUND, e.getMessage());
+        } else {
+            return handleGeneral(e);
+        }
     }
-  }
 
-  @ExceptionHandler(BindException.class)
+    @ExceptionHandler(BindException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<BackendApiResponse> handleBindException(BindException e) {
         log.error(e.getMessage(), e);
@@ -89,6 +90,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
     private ResponseEntity<BackendApiResponse> buildResponse(HttpStatus status, String message) {
         return ResponseEntity.status(status)
+                .contentType(MediaType.APPLICATION_JSON)
                 .body(BackendApiResponse.builder()
                         .status(status.value())
                         .message(message)

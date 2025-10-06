@@ -11,7 +11,7 @@ import java.util.Set;
 @Data
 @Accessors(chain = true)
 public class TripSummaryDto {
-    private Long id;
+    private long id;
     @NonNull
     private String name;
     private LocalDate startDate;

@@ -16,7 +16,7 @@ public interface NoteMapper extends BaseMapper {
     @Mapping(target = "tripId", source = "note.trip.id")
     NoteDto toDto(Note note);
 
-    @Mapping(target = "trip", expression = "java(toTrip(dto.getTripId()))")
+    @Mapping(target = "trip", source = "tripId", qualifiedByName = "toTrip")
     Note toEntity(NoteDto dto);
 
     Set<NoteDto> toDtos(Set<Note> notes);

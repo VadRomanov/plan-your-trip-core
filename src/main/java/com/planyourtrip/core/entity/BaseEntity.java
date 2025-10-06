@@ -17,6 +17,8 @@ public abstract class BaseEntity {
 
     public abstract void setCreatedAt(OffsetDateTime createdAt);
 
+    public abstract void setUpdatedAt(OffsetDateTime createdAt);
+
     @PrePersist
     public void prePersist() {
         if (isNull(getCreatedAt())) {
@@ -26,6 +28,6 @@ public abstract class BaseEntity {
 
     @PreUpdate
     public void preUpdate() {
-        setCreatedAt(OffsetDateTime.now());
+        setUpdatedAt(OffsetDateTime.now());
     }
 }

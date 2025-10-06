@@ -3,11 +3,11 @@ package com.planyourtrip.core.mapper;
 
 import com.planyourtrip.core.dto.domain.TripDto;
 import com.planyourtrip.core.dto.domain.TripSummaryDto;
-import com.planyourtrip.core.entity.BaseEntity;
 import com.planyourtrip.core.entity.Trip;
 import com.planyourtrip.core.entity.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.Named;
 import org.springframework.stereotype.Component;
 
 import java.util.Collections;
@@ -18,7 +18,7 @@ import static java.util.Objects.isNull;
 
 @Mapper(componentModel = "spring")
 @Component
-public interface TripMapper {
+public interface TripMapper extends BaseMapper {
 
     @Mapping(target = "ticketIds", source = "tickets", qualifiedByName = "toIds")
     @Mapping(target = "accommodationIds", source = "accommodations", qualifiedByName = "toIds")
@@ -35,17 +35,14 @@ public interface TripMapper {
     @Mapping(target = "userIds", source = "users", qualifiedByName = "toIds")
     Set<TripDto> toDtos(Set<Trip> trips);
 
+   // @Mapping(target = "tickets.tripId", source = "trip.id")
+   // @Mapping(target = "accommodations.tripId", source = "trip.id")
+   // @Mapping(target = "notes.tripId", source = "trip.id")
+   // @Mapping(target = "users.tripId", source = "trip.id")
+    //todo: tripId in subentities is always 0l
     TripSummaryDto toSummaryDto(Trip trip);
 
-    default Set<Long> toIds(Set<? extends BaseEntity> entities) {
-        if (isNull(entities)) {
-            return Collections.emptySet();
-        }
-        return entities.stream()
-                .map(BaseEntity::getId)
-                .collect(Collectors.toSet());
-    }
-
+    @Named("toUsers")
     default Set<User> toUsers(Set<Long> ids) {
         if (isNull(ids)) {
             return Collections.emptySet();

@@ -16,7 +16,7 @@ public interface TicketMapper extends BaseMapper {
     @Mapping(target = "tripId", source = "ticket.trip.id")
     TicketDto toDto(Ticket ticket);
 
-    @Mapping(target = "trip", expression = "java(toTrip(dto.getTripId()))")
+    @Mapping(target = "trip", source = "tripId", qualifiedByName = "toTrip")
     Ticket toEntity(TicketDto dto);
 
     Set<TicketDto> toDtos(Set<Ticket> tickets);

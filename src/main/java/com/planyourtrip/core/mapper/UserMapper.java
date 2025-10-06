@@ -6,6 +6,7 @@ import com.planyourtrip.core.entity.Trip;
 import com.planyourtrip.core.entity.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.Named;
 import org.springframework.stereotype.Component;
 
 import java.util.Collections;
@@ -16,23 +17,15 @@ import static java.util.Objects.isNull;
 
 @Mapper(componentModel = "spring")
 @Component
-public interface UserMapper {
+public interface UserMapper extends BaseMapper {
 
-    @Mapping(target = "tripIds", expression = "java(toIds(user.getTrips()))")
+    @Mapping(target = "tripIds", source = "trips", qualifiedByName = "toIds")
     UserDto toDto(User user);
 
-    @Mapping(target = "trips", expression = "java(toTrips(dto.getTripIds()))")
+    @Mapping(target = "trips", source = "tripIds", qualifiedByName = "toTrips")
     User toEntity(UserDto dto);
 
-    default Set<Long> toIds(Set<Trip> trips) {
-        if (isNull(trips)) {
-            return Collections.emptySet();
-        }
-        return trips.stream()
-                .map(Trip::getId)
-                .collect(Collectors.toSet());
-    }
-
+    @Named("toTrips")
     default Set<Trip> toTrips(Set<Long> tripIds) {
         if (isNull(tripIds)) {
             return Collections.emptySet();

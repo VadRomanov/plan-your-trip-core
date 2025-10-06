@@ -9,7 +9,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -100,12 +99,10 @@ public class TripController {
                                     MediaType.APPLICATION_PDF.getSubtype()))
                     .contentType(MediaType.APPLICATION_PDF)
                     .body(tripSummaryFile.getBody());
-        } else if (acceptHeader.equals(MediaType.TEXT_PLAIN_VALUE)) {
+        } else {
             return ResponseEntity.ok()
                     .contentType(MediaType.TEXT_HTML)
                     .body(tripSummaryService.getTripSummaryTextById(id));
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).build();
         }
     }
 }
