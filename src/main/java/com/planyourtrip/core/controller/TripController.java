@@ -3,6 +3,7 @@ package com.planyourtrip.core.controller;
 import com.planyourtrip.core.dto.domain.TripDto;
 import com.planyourtrip.core.service.TripService;
 import com.planyourtrip.core.service.TripSummaryService;
+import com.planyourtrip.core.util.TextUtils;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -88,21 +89,21 @@ public class TripController {
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Краткое содержание получено")
     })
-    @GetMapping(value = "/{id}/summary", produces = {MediaType.TEXT_HTML_VALUE, MediaType.APPLICATION_PDF_VALUE})
+    @GetMapping(value = "/{id}/summary", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_PDF_VALUE})
     public ResponseEntity<?> getTripSummaryPdf(@PathVariable Long id,
                                                @RequestHeader(HttpHeaders.ACCEPT) String acceptHeader) {
         if (acceptHeader.equals(MediaType.APPLICATION_PDF_VALUE)) {
             var tripSummaryFile = tripSummaryService.getTripSummaryPdfById(id);
             return ResponseEntity.ok()
                     .header(HttpHeaders.CONTENT_DISPOSITION,
-                            format("attachment; filename=%s.%s", tripSummaryFile.getFileName(),
-                                    MediaType.APPLICATION_PDF.getSubtype()))
+                            format("attachment; filename=%s",
+                                    TextUtils.encodeBase64String(tripSummaryFile.getFileName())))
                     .contentType(MediaType.APPLICATION_PDF)
                     .body(tripSummaryFile.getBody());
         } else {
             return ResponseEntity.ok()
-                    .contentType(MediaType.TEXT_HTML)
-                    .body(tripSummaryService.getTripSummaryTextById(id));
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .body(tripSummaryService.getTripSummaryById(id));
         }
     }
 }

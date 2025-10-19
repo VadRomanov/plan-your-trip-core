@@ -11,12 +11,13 @@ import java.util.Set;
 @Data
 @Accessors(chain = true)
 public class TripSummaryDto {
-    private long id;
+    @NonNull
+    private Long id;
     @NonNull
     private String name;
     private LocalDate startDate;
     private LocalDate endDate;
-    private Boolean expired;
+    private boolean expired;
     private OffsetDateTime createdAt;
     private OffsetDateTime updatedAt;
     private Set<TicketDto> tickets;

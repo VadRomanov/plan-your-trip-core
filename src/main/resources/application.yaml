@@ -21,7 +21,7 @@ server:
 logging:
   level:
     root: info
-    web: info
+    web: debug
     org.springframework.web: debug
     com.planyourtrip.core: ${LOGGING_LEVEL:debug}
     com.zaxxer.hikari.pool: ${HIKARI_LOGGING_LEVEL:debug}

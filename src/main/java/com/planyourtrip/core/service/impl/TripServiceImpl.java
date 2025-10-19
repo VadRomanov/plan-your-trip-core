@@ -16,6 +16,8 @@ import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
 
+import static java.util.Objects.nonNull;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -70,6 +72,9 @@ public class TripServiceImpl implements TripService {
     }
 
     private TripDto setExpiredIfNeeded(TripDto tripDto) {
-        return tripDto.setExpired(tripDto.getEndDate().isBefore(LocalDate.now()));
+        if (nonNull(tripDto.getEndDate())) {
+            tripDto.setExpired(tripDto.getEndDate().isBefore(LocalDate.now()));
+        }
+        return tripDto;
     }
 }

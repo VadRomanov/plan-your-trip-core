@@ -11,7 +11,8 @@ import java.util.Set;
 @Data
 @Accessors(chain = true)
 public class TripDto {
-    private long id;
+    @NonNull
+    private Long id;
     @NonNull
     private String name;
     private LocalDate startDate;

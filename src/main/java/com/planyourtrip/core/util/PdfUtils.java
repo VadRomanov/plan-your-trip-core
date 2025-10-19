@@ -7,7 +7,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 @UtilityClass
-public class PdfUtil {
+public class PdfUtils {
 
     public byte[] generatePdfFromHtml(String html) {
         try (var baos = new ByteArrayOutputStream()) {

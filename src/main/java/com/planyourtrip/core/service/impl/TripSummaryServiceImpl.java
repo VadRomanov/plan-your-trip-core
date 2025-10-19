@@ -7,7 +7,7 @@ import com.planyourtrip.core.exception.ResponseCode;
 import com.planyourtrip.core.mapper.TripMapper;
 import com.planyourtrip.core.repository.TripRepository;
 import com.planyourtrip.core.service.TripSummaryService;
-import com.planyourtrip.core.util.PdfUtil;
+import com.planyourtrip.core.util.PdfUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -36,10 +36,15 @@ public class TripSummaryServiceImpl implements TripSummaryService {
     public TripSummaryFileDto getTripSummaryPdfById(long id) {
         var tripSummary = getTripSummaryDto(id);
         var html = createTripSummaryHtml(tripSummary);
-        var body = PdfUtil.generatePdfFromHtml(html);
+        var body = PdfUtils.generatePdfFromHtml(html);
         return new TripSummaryFileDto()
                 .setFileName(tripSummary.getName() + PDF_EXTENSION)
                 .setBody(body);
+    }
+
+    @Override
+    public TripSummaryDto getTripSummaryById(long id) {
+        return getTripSummaryDto(id);
     }
 
     @Override
